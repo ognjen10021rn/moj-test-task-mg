@@ -1,0 +1,45 @@
+Table projects {
+  id integer [pk, increment]
+  name varchar [not null]
+  description text
+  due_date timestamp
+  status varchar
+}
+
+Table tasks {
+  id integer [pk, increment]
+  project_id integer [not null]
+  name varchar [not null]
+  description text
+  priority_level varchar
+  due_date timestamp
+  status varchar
+}
+
+Table users {
+  id integer [pk, increment]
+  username varchar [not null]
+  email varchar [not null, unique]
+  role varchar
+}
+
+Table task_assignments {
+  id integer [pk, increment]
+  task_id integer [not null]
+  user_id integer [not null]
+}
+
+Table subtasks {
+  id integer [pk, increment]
+  task_id integer [not null]
+  name varchar [not null]
+  description text
+  priority_level varchar
+  due_date timestamp
+  status varchar
+}
+
+Ref: projects.id < tasks.project_id
+Ref: tasks.id < task_assignments.task_id
+Ref: users.id < task_assignments.user_id
+Ref: tasks.id < subtasks.task_id
